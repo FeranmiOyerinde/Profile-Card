@@ -1,43 +1,229 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Card</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
-on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: ["main"]
+        /* Body styling: flex to center the profile card */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #d4e4fc, #f0f4f7); /* Soft gradient background */
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+        /* Card container for profile information */
+        .card {
+            width: 100%;
+            max-width: 400px; /* Limit maximum width on larger screens */
+            padding: 20px;
+            text-align: center;
+            background-color: #ffffff; /* Clean white base color */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            color: #333;
+            height: auto;
+            position: relative;
+            margin: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.1); /* Soft border for definition */
+            background: #f9fafb; /* Subtle background color */
+        }
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+        /* Card hover effect for interactive feel */
+        .card:hover {
+            transform: scale(1.05);
+        }
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+        /* Styling for the profile image */
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid #ccc;
+            object-fit: cover;
+            object-position: top;
+            margin-bottom: 15px;
+        }
 
-jobs:
-  # Single deploy job since we're just deploying
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          # Upload entire repository
-          path: '.'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        /* Name styling */
+        h2 {
+            font-size: 1.8rem; /* Relative size for scalability */
+            font-weight: 600;
+            margin: 10px 0 5px;
+            color: #333;
+        }
+
+        /* General paragraph styling */
+        p {
+            font-size: 1rem; /* Relative font size */
+            margin: 5px 0;
+            color: #666;
+        }
+
+        /* Social media links container styling */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        /* Styling for individual social media links */
+        .social-links a {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.2rem; /* Adjusted for better scaling */
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        /* Specific background colors for social links */
+        .social-links a:nth-child(1) { background: #1da1f2; } /* Twitter */
+        .social-links a:nth-child(2) { background: #333; }    /* GitHub */
+        .social-links a:nth-child(3) { background: #0077b5; }  /* LinkedIn */
+
+        /* Social links hover effect */
+        .social-links a:hover { transform: scale(1.1); }
+
+        /* Email icon styling */
+        .email-icon {
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+
+        /* Mobile-first media query */
+        @media (max-width: 768px) {
+            .card {
+                width: 80%;
+                max-width: 350px;
+                padding: 15px;
+            }
+
+            .profile-pic {
+                width: 120px;
+                height: 120px;
+            }
+
+            h2 {
+                font-size: 1.5rem; /* Adjust font size on mobile */
+            }
+
+            p {
+                font-size: 0.9rem; /* Smaller text for mobile */
+            }
+
+            .social-links a {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem; /* Smaller social icon size */
+            }
+        }
+
+        /* Medium screen layout (Tablets) */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .card {
+                width: 70%;
+                max-width: 450px;
+                padding: 25px;
+            }
+
+            .profile-pic {
+                width: 140px;
+                height: 140px;
+            }
+
+            h2 {
+                font-size: 1.7rem;
+            }
+
+            .social-links a {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Large screen layout (Desktops) */
+        @media (min-width: 1024px) {
+            .card {
+                width: 50%;
+                max-width: 500px;
+                padding: 30px;
+            }
+
+            .profile-pic {
+                width: 150px;
+                height: 150px;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .social-links a {
+                width: 55px;
+                height: 55px;
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <!-- Profile Image -->
+        <img class="profile-pic" src="https://res.cloudinary.com/ddrd4lwyc/image/upload/v1738235032/le9ftcmoglfc69revlc5.jpg"Profile Picture" data-testid="profilePicture">
+
+        <!-- Full Name -->
+        <h2 data-testid="fullName">Oyerinde Feranmi</h2>
+
+        <!-- Job Title -->
+        <p data-testid="jobTitle"><strong>Frontend Developer</strong></p>
+
+        <!-- Short Bio -->
+        <p data-testid="shortBio">Passionate about building beautiful and functional user interfaces.</p>
+
+        <!-- Location -->
+        <p data-testid="currentLocation"><strong>📍 Lagos, Nigeria</strong></p>
+
+        <!-- Email with icon -->
+        <p data-testid="emailAddress">
+            <span class="email-icon"><i class="fas fa-envelope"></i></span>
+            <a href="mailto:oyerindeferanmi24@gmail.com" style="color: #333; text-decoration: none;" target="_blank">oyerindeferanmi24@gmail.com</a>
+        </p>
+
+        <!-- Social Links -->
+        <div class="social-links">
+            <a href="https://x.com/FemziMessi" class="fab fa-twitter" title="Twitter" target="_blank"></a>
+            <a href="https://github.com/FeranmiOyerinde" class="fab fa-github" title="GitHub" target="_blank"></a>
+            <!-- Added LinkedIn link with target="_blank" -->
+            <a href="https://www.linkedin.com/in/feranmi-oyerinde-91440b320/" class="fab fa-linkedin" title="LinkedIn" target="_blank"></a>
+        </div>
+
+        <!-- UTC Time -->
+        <p data-testid="currentTimeUTC" id="utc-time"></p>
+    </div>
+
+    <!-- JavaScript to update UTC Time -->
+    <script>
+        function updateTime() {
+            const utcTime = new Date().toUTCString();
+            document.getElementById('utc-time').textContent = `🕒 ${utcTime}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000); // Update time every second
+    </script>
+</body>
+</html>
